@@ -23,6 +23,20 @@ dimCH = height / nyC
 # initial game state (all in zero)
 gameState = np.zeros((nxC, nyC))
 
+# Some structures
+
+# Walking
+gameState[10, 10] = 1
+gameState[11, 11] = 1
+gameState[11, 12] = 1
+gameState[10, 12] = 1
+gameState[9, 12] = 1
+
+# Tube
+gameState[30, 20] = 1
+gameState[31, 20] = 1
+gameState[32, 20] = 1
+
 # To stop and start execution
 pauseExec = True  # when start the game is paused (press any key to start)
 
@@ -40,12 +54,17 @@ while True:
     ev = pygame.event.get()
 
     for event in ev:
-        # [q] to exit
+        # any key to pause or start de game
         if event.type == pygame.KEYDOWN:
             pauseExec = not pauseExec
 
-            if event.key == 113:
+            # [q] to exit
+            if event.unicode == 'q':
                 exit(0)
+
+            # [l] to clear (all cell to zero)
+            if event.unicode == 'l':
+                newGameState = np.zeros((nxC, nyC))
 
         # use mouse to set cell to one (live)
         mouseClick = pygame.mouse.get_pressed()
